@@ -1,0 +1,2 @@
+streamlit>=1.47
+st-clickable-images==0.0.3
