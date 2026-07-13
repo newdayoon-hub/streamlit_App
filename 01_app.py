@@ -453,4 +453,3 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-streamlit run app.py
