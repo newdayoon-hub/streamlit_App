@@ -1,10 +1,3 @@
-from pathlib import Path
-import textwrap, zipfile, os, json
-
-base = Path("/mnt/data/color_trip_streamlit")
-base.mkdir(parents=True, exist_ok=True)
-
-app_code = r'''
 import streamlit as st
 from st_clickable_images import clickable_images
 
@@ -460,19 +453,4 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-'''
-
-requirements = """streamlit>=1.47
-st-clickable-images==0.0.3
-"""
-
-readme = r'''
-# Palette Voyage
-
-전 세계 여행지의 풍경 사진을 대표 색상별로 살펴보고, 사진을 클릭하면 여행지 설명을 팝업으로 보여주는 Streamlit 앱입니다.
-
-## 로컬 실행
-
-```bash
-pip install -r requirements.txt
 streamlit run app.py
