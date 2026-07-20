@@ -6,6 +6,8 @@ from urllib.parse import parse_qs, urlparse
 
 import altair as alt
 import isodate
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
@@ -501,14 +503,24 @@ if "video_info" in st.session_state and "comments" in st.session_state:
     with tab1:
         time_df = build_time_series(df, granularity)
 
-        x_type = "temporal" if granularity in {"일별", "시간별"} else "ordinal"
+        # Altair 버전 차이로 인한 type 인자 오류를 피하기 위해
+        # 시간축과 범주축을 명시적인 shorthand로 분리한다.
+        if granularity in {"일별", "시간별"}:
+            time_df["period"] = pd.to_datetime(time_df["period"], errors="coerce")
+            x_encoding = alt.X("period:T", title=granularity.replace("별", ""))
+            tooltip_encoding = [alt.Tooltip("period:T", title="구간"), alt.Tooltip("댓글 수:Q")]
+        else:
+            time_df["period"] = time_df["period"].astype(str)
+            x_encoding = alt.X("period:N", title=granularity.replace("별", ""), sort=None)
+            tooltip_encoding = [alt.Tooltip("period:N", title="구간"), alt.Tooltip("댓글 수:Q")]
+
         time_chart = (
             alt.Chart(time_df)
             .mark_line(point=True)
             .encode(
-                x=alt.X("period", type=x_type, title=granularity.replace("별", "")),
+                x=x_encoding,
                 y=alt.Y("댓글 수:Q", title="댓글 수"),
-                tooltip=["period", "댓글 수"],
+                tooltip=tooltip_encoding,
             )
             .properties(height=430)
             .interactive()
@@ -623,7 +635,7 @@ if "video_info" in st.session_state and "comments" in st.session_state:
             axis.imshow(wc, interpolation="bilinear")
             axis.axis("off")
             plt.tight_layout(pad=0)
-            st.pyplot(figure, use_container_width=True)
+            st.pyplot(figure)
             plt.close(figure)
 
             top_words = pd.DataFrame(
