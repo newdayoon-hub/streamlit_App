@@ -483,15 +483,4 @@ __pycache__/
 *.pyc
 '''
 
-readme = r'''# 유튜브 댓글 분석기
-
-## GitHub 파일 구조
-
-```text
-your-repository/
-├─ app.py
-├─ requirements.txt
-├─ fonts/
-│  └─ NanumGothic.ttf
-└─ .streamlit/
    └─ secrets.toml   # 로컬 테스트용이며 GitHub에 올리지 않음
