@@ -482,5 +482,3 @@ gitignore = '''.streamlit/secrets.toml
 __pycache__/
 *.pyc
 '''
-
-   └─ secrets.toml   # 로컬 테스트용이며 GitHub에 올리지 않음
