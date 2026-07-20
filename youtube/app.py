@@ -22,7 +22,7 @@ st.set_page_config(
     layout="wide",
 )
 
-FONT_PATH = Path("fonts/NanumGothic.ttf")
+FONT_PATH = Path("youtube/NanumGothic.ttf")
 
 KOREAN_STOPWORDS = {
     "이", "그", "저", "것", "수", "등", "들", "및", "더", "좀", "정말", "진짜",
