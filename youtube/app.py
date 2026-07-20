@@ -1,11 +1,3 @@
-from pathlib import Path
-import textwrap, zipfile, os
-
-base = Path("/mnt/data/youtube_comment_analyzer")
-(base / ".streamlit").mkdir(parents=True, exist_ok=True)
-(base / "fonts").mkdir(parents=True, exist_ok=True)
-
-app_code = r'''
 import re
 from collections import Counter
 from datetime import timezone
@@ -713,49 +705,3 @@ if "video_info" in st.session_state and "comments" in st.session_state:
     st.caption(
         "감성 분석은 규칙 기반의 참고용 결과입니다. 반어법, 신조어, 문맥에 따라 실제 의미와 다르게 분류될 수 있습니다."
     )
-'''
-
-requirements = '''streamlit>=1.40,<2.0
-google-api-python-client>=2.150,<3.0
-pandas>=2.2,<3.0
-altair>=5.4,<6.0
-matplotlib>=3.9,<4.0
-wordcloud>=1.9.4,<2.0
-isodate>=0.7,<1.0
-'''
-
-secrets_example = '''# 이 파일은 로컬 테스트용 예시입니다.
-# 실제 API 키가 들어간 secrets.toml은 GitHub에 올리지 마세요.
-
-YOUTUBE_API_KEY = "YOUR_YOUTUBE_DATA_API_KEY"
-'''
-
-gitignore = '''.streamlit/secrets.toml
-__pycache__/
-*.pyc
-.env
-'''
-
-readme = r'''# YouTube 댓글 분석기
-
-YouTube 영상 링크를 입력하면 다음 정보를 분석하는 Streamlit 앱입니다.
-
-- YouTube 영상 재생 및 기본 통계
-- 댓글 수 설정
-- 댓글 작성 추이
-- 긍정·중립·부정 반응도
-- 댓글 좋아요·답글 기반 참여도
-- 나눔고딕 폰트를 적용한 한글 워드클라우드
-- 분석 결과 CSV 다운로드
-
-## 1. 저장소 구조
-
-```text
-youtube_comment_analyzer/
-├─ app.py
-├─ requirements.txt
-├─ .gitignore
-├─ .streamlit/
-│  └─ secrets.toml.example
-└─ fonts/
-   └─ NanumGothic.ttf
